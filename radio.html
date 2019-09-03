@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Radio Link Advisor</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="materialize/css/materialize.min.css" type="text/css" rel="stylesheet">
+    <!-- favicon -->
+    <link rel="icon" type="image/png" sizes="16x16" href="images/fav.png">
+    <link rel="icon" type="image/png" sizes=32x32 href="images/fav.png">
+
+</head>
+
+<style>
+    /* style for parameters unit */
+.input-field .prefix{
+    font-size: 16px;
+}
+/* style for container */
+.myCont{
+    width: 85%;
+}
+.navColor{
+    background-color: #26a69a;
+}
+.image1{
+    margin-top: 5px;
+}
+
+#los,#CA,#link,#tr{
+    color:#26a69a;
+}
+#tr{
+    font-weight: bold;
+    /* display: none; */
+}
+nav .size{
+    font-size: 23px;
+}
+.out{
+  display: none;
+  margin-top: 40px;
+  height: 70px;
+  background-color: #fff;
+  border-radius: 3px;
+  border: 1px solid #c4c4c4;
+  background-color: transparent;
+  font-size: 2rem;
+  color: #333;
+  background-image: linear-gradient(to bottom,transparent,transparent 50%,rgba(0,0,0,.04));
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,.05), inset 0 1px 0 0 rgba(255,255,255,.45), inset 0 -1px 0 0 rgba(255,255,255,.15), 0 1px 0 0 rgba(255,255,255,.15);
+  text-shadow: 0 1px rgba(255,255,255,.4);
+}
+.yes{
+    display: flex;
+}
+
+.slide-left{
+    animation: slide-left 5s;
+}
+@keyframes slide-left{
+    from{
+    margin-left: 0%;
+    width: 300%;
+    }
+    to{
+    margin-left: 0%;
+    width:100%;
+    }
+}
+</style>
+
+
+
+<body>
+    <!-- Header section -->
+    <header>
+        <nav class="nav-wrapper navColor ">
+        <div class="container">
+            <a class="brand-logo center size">Radio Link Advisor 
+            </a>
+        </div>
+        </nav>
+    </header>
+
+    <!-- Project sections -->
+    <main>
+        <!-- Desciption section -->
+        <section>
+            <div class="row">
+                <div class="container">
+                <p class="center">Radio transmission needs a free of obstacle path between antennas known as radio line of sight. It is necessary to grasp the wants for radio line of sight when designing a network operation in the 2.4Ghz ISM band.  
+                </p>
+                </div>
+            </div>
+        </section>
+        <div class="out container" id="out">
+            <div class="row"> 
+                <div class="yes">
+                    <h6 id="los" class="col l4"></h6>
+                    <h6 id="CA" class=" l4"></h6>
+                    <h6 id="link" class="col l4"></h6>
+                </div>  
+                <h6 id="tr" class="center"></h6>  
+                <!-- <p class="center">Kindly input your values below :</p><br> -->
+            </div>
+        </div><br><br>
+    
+
+        <!-- Input section -->
+        <section>
+            <div class="container myCont">
+            <div class="row">
+                    <div class="col s12 l5">
+                        <div class="row">
+                             <div class="col l5">
+                                    <img src="NEWTRA.png" class="responsive-img">
+                                </div>
+                            <div class="col l7">
+                        <!-- <h1>Site 1</h1> -->
+                        <form>
+                            <div class="input-field">
+                                <span class="prefix">m</span>
+                                <input type="text" id="heightT" placeholder="0.0" onchange="validate('heightT')" title="please fill out this field" required>
+                                 <label for="Height" class="tooltiptext">Height Of Antenna(H<sub>1</sub>)</label>
+                             </div>
+                             <div class="input-field">
+                                <span class="prefix">dB</span>
+                                 <input type="text" id="GainT" placeholder="0.0" title="please fill out this field" required onchange="validate('GainT')">
+                                 <label for="Transmission Anti-Gain">Transmitted Anti-Gain(G<sub>T</sub>)</label>
+                             </div>
+                             <div class="input-field">
+                                <span class="prefix">dB</span>
+                                 <input type="text" id="powerT" placeholder="0.0" title="please fill out this field" required onchange="validate('powerT')">
+                                 <label for="Transmission Power">Transmission Power(P<sub>T</sub>)</label>
+                             </div>
+                        </form>
+                    </div>
+                    
+                </div>
+            </div>
+                    <div class="col s12 l2">
+                        <!-- <h1>Com</h1> -->
+                        <form>
+                            <div class="input-field">
+                                <span class="prefix">Gh<sub>z</sub></span>
+                                <input type="text" id="freq" placeholder="0.0" title="please fill out this field" required onchange="validate('freq')">
+                                <label for="frequency">Frequency(F)</label>
+                            </div>
+                            <div class="input-field">
+                                <span class="prefix">dB</span>
+                                <input type="text" id="Loss" placeholder="0.0" title="please fill out this field" required onchange="validate('Loss')">
+                                <label for="Estimated">Loss(L)</label>
+                            </div>
+                            <div class="input-field">
+                                <span class="prefix"></span>
+                                <input type="text" id="Kf" placeholder="1.33" title="please fill out this field" required onchange="validate('Kf')">
+                                <label for="K-factor">K-Factor(K<sub>F</sub>)</label>
+                            </div>
+                            <div class="input-field">
+                                <span class="prefix">Km</span>
+                                <input type="text" id="dist" placeholder="0.0" title="please fill out this field" required onchange="validate('dist')">
+                                <label for="distance">Distance(D)</label>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="col s12 l5">
+                        <div class="row">
+                            <div class="col l5">
+                                <img src="NEWTRA.png" class="responsive-img">
+                            </div>
+                        <div class="col l7">
+                        <!-- <h1>Site 2</h1> -->
+                        <form>
+                            <div class="input-field">
+                                <span class="prefix">m</span>
+                                <input type="text" id="heightR" placeholder="0.0" title="please fill out this field" required onchange="validate('heightR')">
+                                <label for="Height">Height Of Antenna(H<sub>2</sub>)</label>
+                            </div>
+                            <div class="input-field">
+                                <span class="prefix">dB</span>
+                                <input type="text" id="GainR" placeholder="0.0" title="please fill out this field" required onchange="validate('GainR')">
+                                <label for="Received Anti-Gain">Received Anti-Gain(G<sub>R</sub>)</label>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+    </section>
+
+        <!-- submit section -->
+        <div class="center-align">
+            <a href="#" class="btn" onclick="calculate(parameters)">Calculate</a>
+            <a href="index.html" class="btn">Clear</a>
+        </div>
+    </main>
+<!-- script section -->
+    <script src="https://kit.fontawesome.com/d54c227c34.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="materialize/js/materialize.min.js" type="text/javascript"></script>
+    <script src="radio.js" type="text/javascript"></script>
+    <script>
+        var parameters = {
+            frequencyOfOperation : document.getElementById("freq"),
+            heightSiteOne : document.getElementById("heightT"),
+            heightSiteTwo : document.getElementById("heightR"),
+            transmissionPower:document.getElementById("powerT"),
+            transmissionAntGain:document.getElementById("GainT"),
+            receiverAntGain: document.getElementById("GainR"),
+            lineAndBranch: document.getElementById("Loss"),
+            distanceBwSites: document.getElementById("dist"),
+            kfactor:document.getElementById("Kf"),
+            lineOfSight: document.getElementById("los"),
+            clearanceAllowance:document.getElementById("CA"),
+            linkBudgets:document.getElementById("link"),
+            response:document.getElementById("tr"),
+            show:document.getElementById('out'),
+        
+        }
+        console.log(parameters);
+    
+    </script>
+</body>
+</html>
