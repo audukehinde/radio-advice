@@ -1,102 +1,105 @@
-        // var parameters = {
-        //     frequencyOfOperation : 2.4,
-        //     heightSiteOne : 1.0,
-        //     heightSiteTwo : 0.52,
-        //     transmissionPower:12.0,
-        //     transmissionAntGain: 15,
-        //     receiverAntGain: 7.0,
-        //     lineAndBranch: 1.24,
-        //     distanceBwSites: 10,
-        //     kfactor:1.33,
-        
-        // }
+let parameters = {
+  frequencyOfOperation: document.getElementById("freq"),
+  heightSiteOne: document.getElementById("heightT"),
+  heightSiteTwo: document.getElementById("heightR"),
+  transmissionPower: document.getElementById("powerT"),
+  transmissionAntGain: document.getElementById("GainT"),
+  receiverAntGain: document.getElementById("GainR"),
+  lineAndBranch: document.getElementById("Loss"),
+  distanceBwSites: document.getElementById("dist"),
+  kfactor: document.getElementById("Kf"),
+  lineOfSight: document.getElementById("los"),
+  clearanceAllowance: document.getElementById("CA"),
+  linkBudgets: document.getElementById("link"),
+  response: document.getElementById("tr"),
+  show: document.getElementById("out"),
+};
 
-         // function to validate
+let validate = (el) => {
+  if (
+    document.getElementById(el).id == "Kf" &&
+    (document.getElementById(el).value == "0" ||
+      document.getElementById(el).value === "")
+  ) {
+    console.log((document.getElementById(el).value = 1.33));
+  } else {
+    var pattern = /^-?[0-9]+(.[0-9]{1,7})?$/;
+    // ^([0-9]\.\d+)|([1-9]\d*\.?\d*)$
+    var text = document.getElementById(el).value;
+    var element = document.getElementById(el);
+    if (text.match(pattern) == null) {
+      // alert('the format is wrong');
+      element.style.borderBottom = "1px solid red";
+      element.style.color = "red";
+      element.title = "please enter a valid input here";
+    } else {
+      element.style.borderBottom = "1px solid teal";
+      element.style.color = "initial";
+      element.title = "";
+    }
+  }
+};
 
-        function validate(el)
-        {  
-            if (document.getElementById(el).id=="Kf" && (document.getElementById(el).value=="0" || document.getElementById(el).value=="")){
-                document.getElementById(el).value=1.33;
-            } else {
-                var pattern = /^-?[0-9]+(.[0-9]{1,7})?$/;
-            // ^([0-9]\.\d+)|([1-9]\d*\.?\d*)$
-                var text = document.getElementById(el).value;
-                var element =document.getElementById(el);
-                if (text.match(pattern)==null)
-                {
-                // alert('the format is wrong');
-                element.style.borderBottom="1px solid red";
-                element.style.color="red";
-                element.title="please enter a valid input here";
-                }else{
-                    element.style.borderBottom="1px solid teal";
-                    element.style.color="initial";
-                    element.title="";
-                }
-            }
-            
-        }
-        // using object in function
-        function calculate(parameters){
-            var outputs=[];
-            var frequencyOfOperation=Number(parameters.frequencyOfOperation.value);
-            var heightSiteOne = Number(parameters.heightSiteOne.value);
-            var heightSiteTwo = Number(parameters.heightSiteTwo.value);
-            var transmissionPower= Number(parameters.transmissionPower.value);
-            var transmissionAntGain=Number(parameters.transmissionAntGain.value);
-            var receiverAntGain=Number(parameters.receiverAntGain.value);
-            var lineAndBranch=Number(parameters.lineAndBranch.value);
-            var distanceBwSites =Number(parameters.distanceBwSites.value);
-            var kfactor=Number(parameters.kfactor.value);
-            if (kfactor=="" && kfactor=="0"){
-                kfactor=1.33;
-            }
-            console.log(kfactor);
-            if ((frequencyOfOperation!="" && parameters.frequencyOfOperation.style.color !="red" )&& (heightSiteOne!="" && parameters.heightSiteOne.style.color!="red") && (heightSiteTwo!="" && parameters.heightSiteTwo.style.color!="red") && (transmissionPower!="" && parameters.transmissionPower.style.color!="red") && (transmissionAntGain!="" && parameters.transmissionAntGain.style.color!="red") && (receiverAntGain!="" && parameters.receiverAntGain.style.color!="red") && (lineAndBranch!="" && parameters.lineAndBranch.style.color!="red") && (distanceBwSites!="" && parameters.distanceBwSites.style.color!="red") && parameters.kfactor.style.color!="red"){
-                console.log(frequencyOfOperation, heightSiteOne,heightSiteTwo,transmissionPower,transmissionAntGain,receiverAntGain,lineAndBranch,distanceBwSites,kfactor);
-                
-                // solving for line of sight
-                var maxLineOfSight = 3.57 * (Math.sqrt(kfactor*heightSiteOne) + Math.sqrt(kfactor*heightSiteTwo));
-                console.log('maximum line of sight ' + maxLineOfSight);
+function lineOfSite() {
+  let result =
+    3.57 *
+      Math.sqrt(parameters.kfactor.value * parameters.heightSiteOne.value) +
+    Math.sqrt(parameters.kfactor.value * parameters.heightSiteTwo.value);
+  return result;
+}
 
-                // solving for obstacle clearance
-                var clearanceAllowance = 6.56* (Math.sqrt(distanceBwSites/frequencyOfOperation));
-                console.log('clearance allowance is ' + clearanceAllowance);
+let obstacleClearance = () => {
+  let obstacle =
+    6.56 *
+    Math.sqrt(
+      parameters.distanceBwSites.value / parameters.frequencyOfOperation.value
+    );
+  return obstacle;
+};
 
-                // solving for link budgets
-                var logPart = (20*(Math.log10(frequencyOfOperation))) + 20*(Math.log10(distanceBwSites));
-                console.log(logPart);
-                var linkBudgets = (transmissionPower + transmissionAntGain +receiverAntGain) - (92.4+logPart) - lineAndBranch;
-                console.log('linkBudgets is ' + linkBudgets)
+let linkBudget = () => {
+  let link =
+    (parameters.transmissionPower.value +
+    parameters.transmissionAntGain.value +
+    parameters.receiverAntGain.value) -
+    92.4 +
+    ((20 * Math.log10(parameters.frequencyOfOperation.value)) +
+      (20 * Math.log10(parameters.distanceBwSites.value))) - parameters.lineAndBranch.value;
+  return link;
+};
 
-                // alert('maxLineOfSight: ' + maxLineOfSight);
-                if (maxLineOfSight>distanceBwSites){
-                    parameters.response.style.color='green';
-                    var response= "Antenna Height is OKAY!"
-                    
-                }else{
-                    parameters.response.style.color='red';
-                    response="Re-assess Antenna Height!"
-                    
-                }
+let btnCalculate = document.querySelector(".btnCalc");
+btnCalculate.addEventListener("click", () => {
+  if (
+    parameters.frequencyOfOperation.value === "" ||
+    parameters.clearanceAllowance.value === "" ||
+    parameters.heightSiteOne.value === "" ||
+    parameters.heightSiteTwo === "" ||
+    parameters.distanceBwSites.value === ""
+  ) {
+    alert("Please,fill the required fields");
+  }else {
+    parameters.lineOfSight.innerHTML = `Line of Site is ${lineOfSite().toFixed(2)}`;
+    // console.log(`Line of Site is ${lineOfSite()}`);
+    parameters.clearanceAllowance.innerHTML = `Obstacle Clearance is ${obstacleClearance().toFixed(
+      2
+    )}`;
+    // console.log(`Obstacle Clearance is ${obstacleClearance()}`);
+    parameters.linkBudgets.innerHTML = `Link Budget is ${linkBudget().toFixed(
+      2
+    )}`;
+    parameters.show.style.display = "block";
+  }
 
-                // display testing
-                outputs[0]=maxLineOfSight;
-                outputs[1]=clearanceAllowance;
-                outputs[2]=linkBudgets;
-                console.log(outputs);
-                parameters.lineOfSight.innerHTML='Line of Site: ' + maxLineOfSight.toFixed(3) + ' Km';
-                parameters.clearanceAllowance.innerHTML='Obstacle Clearance Allowance: ' + clearanceAllowance.toFixed(3) + ' m';
-                parameters.linkBudgets.innerHTML='Link Budget: '+ linkBudgets.toFixed(3);
-                parameters.response.innerHTML=response;
-                parameters.response.classList.add('slide-left');
-                parameters.show.style.display='block';
-                // alert(response);
-                return outputs;
-                
-            } else {
-                alert("please fill all required fields with the right inputs");
-            }
-            
-            
-        }
+  let displayLine0fSite = lineOfSite();
+
+  if(displayLine0fSite > parameters.distanceBwSites.value) {
+    parameters.response.style.display = "block";
+    parameters.response.innerHTML = "Height is Okay";
+  } else {
+    parameters.response.innerHTML = "Reasses Anterna Height";
+    parameters.response.style.color = "red";
+  }
+ 
+});
+

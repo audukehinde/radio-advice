@@ -96,7 +96,7 @@ nav .size{
                 </div>
             </div>
         </section>
-        <div class="out container" id="out">
+        <div class="out container mydisplay" id="out">
             <div class="row"> 
                 <div class="yes">
                     <h6 id="los" class="col l4"></h6>
@@ -194,7 +194,7 @@ nav .size{
 
         <!-- submit section -->
         <div class="center-align">
-            <a href="#" class="btn" onclick="calculate(parameters)">Calculate</a>
+            <a href="#" class="btn btnCalc">Calculate</a>
             <a href="index.html" class="btn">Clear</a>
         </div>
     </main>
@@ -203,26 +203,5 @@ nav .size{
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script src="materialize/js/materialize.min.js" type="text/javascript"></script>
     <script src="radio.js" type="text/javascript"></script>
-    <script>
-        var parameters = {
-            frequencyOfOperation : document.getElementById("freq"),
-            heightSiteOne : document.getElementById("heightT"),
-            heightSiteTwo : document.getElementById("heightR"),
-            transmissionPower:document.getElementById("powerT"),
-            transmissionAntGain:document.getElementById("GainT"),
-            receiverAntGain: document.getElementById("GainR"),
-            lineAndBranch: document.getElementById("Loss"),
-            distanceBwSites: document.getElementById("dist"),
-            kfactor:document.getElementById("Kf"),
-            lineOfSight: document.getElementById("los"),
-            clearanceAllowance:document.getElementById("CA"),
-            linkBudgets:document.getElementById("link"),
-            response:document.getElementById("tr"),
-            show:document.getElementById('out'),
-        
-        }
-        console.log(parameters);
-    
-    </script>
 </body>
 </html>
